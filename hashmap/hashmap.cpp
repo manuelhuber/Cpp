@@ -14,11 +14,7 @@ class HashMap {
 
 public:
 
-    HashMap() {
-        HashMap(11, 0.75);
-    }
-
-    HashMap(int initialSize, float lf);
+    HashMap(int initialSize = 11, float lf = 0.75);
 
     void add(Key key, Value value);
 
@@ -32,9 +28,9 @@ private:
 
     void double_the_trouble();
 
-    float loadFactor{};
-    int currentSize{};
-    int numberOfEntries{};
+    float loadFactor;
+    int currentSize;
+    int numberOfEntries;
     Entry **map;
 
 };
