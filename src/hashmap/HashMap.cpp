@@ -40,9 +40,10 @@ private:
     Entry **map;
 
 };
+
 #endif //CPP_HASHMAP_H
 
-// The implementations for template classes have to be in the header file
+// THE IMPLEMENTATIONS FOR TEMPLATE CLASSES HAVE TO BE IN THE SAME FILE AS THE DECLARATION
 
 template<class Key, class Value>
 HashMap<Key, Value>::HashMap(int initialSize, float lf) {

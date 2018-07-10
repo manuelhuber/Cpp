@@ -6,11 +6,31 @@ int main(int argc, char **argv) {
     return RUN_ALL_TESTS();
 }
 
-TEST(basic_check, test_eq) {
-    auto *mappo = new HashMap<std::string, int>();
-    EXPECT_NE(mappo, nullptr);
+class HashMapTest : public ::testing::Test {
+public:
+    HashMap<std::string, int> *map;
+protected:
+
+    virtual void SetUp() {
+        map = new HashMap<std::string, int>();
+    }
+
+    virtual void TearDown() {
+        delete map;
+    }
+};
+
+TEST_F(HashMapTest, test_constructor) {
+    EXPECT_NE(map, nullptr);
 }
 
-TEST(basic_check, test_neq) {
-    EXPECT_NE(1, 0);
+TEST_F(HashMapTest, test_add) {
+    map->add("foo", 42);
+    EXPECT_EQ(map->get("foo"), 42);
+}
+
+TEST_F(HashMapTest, test_add_override) {
+    map->add("foo", 42);
+    map->add("foo", 43);
+    EXPECT_EQ(map->get("foo"), 43);
 }
