@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include <optional>
 
 template<class Key, class Value>
 class HashMap {
@@ -20,19 +21,19 @@ class HashMap {
 
 public:
 
-    HashMap(int initialSize = 11, float lf = 0.75);
+    HashMap(int initialSize = 11, float loadFactor = 0.75);
 
     void add(Key key, Value value);
 
-    Value get(Key key);
+    std::optional<Value> get(Key key) const;
 
     bool remove(Key key); // todo
 
 private:
 
-    int getIndex(Key key);
+    int getIndex(Key key) const;
 
-    void double_the_trouble();
+    void double_size();
 
     float loadFactor;
     int currentSize;
@@ -46,9 +47,9 @@ private:
 // THE IMPLEMENTATIONS FOR TEMPLATE CLASSES HAVE TO BE IN THE SAME FILE AS THE DECLARATION
 
 template<class Key, class Value>
-HashMap<Key, Value>::HashMap(int initialSize, float lf) {
+HashMap<Key, Value>::HashMap(int initialSize, float loadFactor) {
     numberOfEntries = 0;
-    loadFactor = lf;
+    this->loadFactor = loadFactor;
     currentSize = initialSize;
     map = new Entry *[currentSize];
 }
@@ -90,12 +91,12 @@ void HashMap<Key, Value>::add(Key key, Value value) {
 
     numberOfEntries++;
     if (numberOfEntries > currentSize * loadFactor) {
-        double_the_trouble();
+        double_size();
     }
 }
 
 template<class Key, class Value>
-void HashMap<Key, Value>::double_the_trouble() {
+void HashMap<Key, Value>::double_size() {
     Entry **oldMap = map;
     int oldSize = currentSize;
     currentSize *= 2;
@@ -117,17 +118,22 @@ void HashMap<Key, Value>::double_the_trouble() {
 }
 
 template<class Key, class Value>
-Value HashMap<Key, Value>::get(Key key) {
+std::optional<Value> HashMap<Key, Value>::get(Key key) const {
     int index = getIndex(key);
     Entry *entry = map[index];
+
+    if (entry == nullptr) return {};
+
     while (entry->key != key) {
         entry = entry->next;
+        if (entry == nullptr) return {};
     }
+
     return entry->value;
 }
 
 template<class Key, class Value>
-int HashMap<Key, Value>::getIndex(Key key) {
+int HashMap<Key, Value>::getIndex(Key key) const {
     std::hash<std::string> hash_fn;
     auto index = static_cast<int>(hash_fn(key) % currentSize);
     return index;
