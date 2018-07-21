@@ -35,9 +35,19 @@ TEST_F(HashMapTest, test_add_override) {
     EXPECT_TRUE(map->get("foo").has_value());
     map->add("foo", 43);
     EXPECT_TRUE(map->get("foo").has_value());
-    EXPECT_EQ(map->get("foo").value(), 43);
 }
 
-TEST_F(HashMapTest, test_get_null) {
+TEST_F(HashMapTest, test_get_non_existent) {
     EXPECT_FALSE(map->get("nothing").has_value());
+}
+
+TEST_F(HashMapTest, test_remove_non_existent) {
+    EXPECT_FALSE(map->remove("nothing"));
+}
+
+TEST_F(HashMapTest, test_remove_entry) {
+    map->add("foo", 42);
+    EXPECT_TRUE(map->get("foo").has_value());
+    EXPECT_TRUE(map->remove("foo"));
+    EXPECT_FALSE(map->get("foo").has_value());
 }

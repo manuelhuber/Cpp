@@ -51,19 +51,44 @@ HashMap<Key, Value>::HashMap(int initialSize, float loadFactor) {
     numberOfEntries = 0;
     this->loadFactor = loadFactor;
     currentSize = initialSize;
-    map = new Entry *[currentSize];
+    map = new Entry *[currentSize]();
 }
 
 template<class Key, class Value>
 bool HashMap<Key, Value>::remove(Key key) {
-    return false; // todo
+    int index = getIndex(key);
+    auto entry = map[index];
+
+    if (entry == nullptr) return false;
+
+    // Find the entry with the key (and also get a reference to entry in front of it)
+    Entry *previous = nullptr;
+    while (entry->key != key) {
+        // Incorrect key and last entry -> nothing left to do, no entry with given key exists
+        if (entry->next == nullptr) return false;
+        previous = entry;
+        entry = entry->next;
+    }
+
+    if (previous != nullptr) {
+        // if the found entry is not the first in line, change the pointer chain
+        previous->next = entry->next;
+    } else if (entry->next != nullptr) {
+        map[index] = entry->next;
+    } else {
+        map[index] = nullptr;
+    }
+
+    numberOfEntries--;
+    delete entry;
+    return true; // todo
 }
 
 template<class Key, class Value>
 void HashMap<Key, Value>::add(Key key, Value value) {
     int index = getIndex(key);
 
-    auto newEntry = new Entry;
+    auto newEntry = new Entry();
     newEntry->key = key,
     newEntry->value = value,
     newEntry->next = nullptr;
