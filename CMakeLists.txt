@@ -7,6 +7,10 @@ add_definitions(-std=gnu++17)
 set(SOURCE_FILES main.cpp)
 add_executable(my_main ${SOURCE_FILES})
 
+add_subdirectory(src/arraylist)
+include_directories(src/arraylist)
+
+add_subdirectory(src/hashmap)
 include_directories(src/hashmap)
 
 add_subdirectory(src/hashmap)
