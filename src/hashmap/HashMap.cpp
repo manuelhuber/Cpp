@@ -27,7 +27,7 @@ public:
 
     std::optional<Value> get(Key key) const;
 
-    bool remove(Key key); // todo
+    bool remove(Key key);
 
 private:
 
@@ -81,7 +81,7 @@ bool HashMap<Key, Value>::remove(Key key) {
 
     numberOfEntries--;
     delete entry;
-    return true; // todo
+    return true;
 }
 
 template<class Key, class Value>
