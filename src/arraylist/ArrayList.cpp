@@ -16,7 +16,7 @@ public:
 
     int size();
 
-    T get(int);
+    T *get(int);
 
 private:
     void grow();
@@ -52,7 +52,7 @@ bool ArrayList<T>::remove(int i) {
 }
 
 template<class T>
-T ArrayList<T>::get(int index) {
+T *ArrayList<T>::get(int index) {
     return data[index];
 }
 

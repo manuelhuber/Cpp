@@ -13,7 +13,9 @@ include_directories(src/arraylist)
 add_subdirectory(src/hashmap)
 include_directories(src/hashmap)
 
-add_subdirectory(src/hashmap)
+add_subdirectory(src/tree)
+include_directories(src/tree)
+
 add_subdirectory(tests)
 
 target_link_libraries(my_main hashmap)

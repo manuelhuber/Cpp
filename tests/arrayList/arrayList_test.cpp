@@ -43,7 +43,6 @@ TEST_F(ArrayListTest, test_add_many) {
         list->remove(0);
     }
     EXPECT_EQ(list->size(), 0);
-    delete foo;
 }
 
 TEST_F(ArrayListTest, test_remove) {
