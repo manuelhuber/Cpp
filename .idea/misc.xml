@@ -4,8 +4,11 @@
   <component name="CidrRootsConfiguration">
     <libraryRoots>
       <file path="$PROJECT_DIR$/lib" />
-      <file path="$PROJECT_DIR$/tests/lib/googletest" />
+      <file path="$PROJECT_DIR$/tests/_lib/googletest" />
     </libraryRoots>
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/tests/_lib" />
+    </excludeRoots>
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
